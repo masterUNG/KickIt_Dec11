@@ -35,7 +35,7 @@ packages:
       name: async
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.3.0"
+    version: "2.4.0"
   auto_size_text:
     dependency: "direct main"
     description:
@@ -85,20 +85,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.8.0"
-  calendar_view_widget:
-    dependency: "direct main"
-    description:
-      name: calendar_view_widget
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.6"
-  card_settings:
-    dependency: "direct main"
-    description:
-      name: card_settings
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.4.2"
   carousel_pro:
     dependency: "direct main"
     description:
@@ -190,20 +176,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.2"
-  date_utils:
-    dependency: transitive
-    description:
-      name: date_utils
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.0+2"
-  datetime_picker_formfield:
-    dependency: "direct main"
-    description:
-      name: datetime_picker_formfield
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.8"
   dio:
     dependency: "direct main"
     description:
@@ -321,13 +293,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.3.2"
-  flutter_calendar:
-    dependency: "direct main"
-    description:
-      name: flutter_calendar
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.8"
   flutter_calendar_carousel:
     dependency: "direct main"
     description:
@@ -335,13 +300,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.4.6"
-  flutter_clean_calendar:
-    dependency: "direct main"
-    description:
-      name: flutter_clean_calendar
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.1"
   flutter_colorpicker:
     dependency: "direct main"
     description:
@@ -363,13 +321,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.12"
-  flutter_cupertino_settings:
-    dependency: transitive
-    description:
-      name: flutter_cupertino_settings
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.0"
   flutter_image_compress:
     dependency: "direct main"
     description:
@@ -382,13 +333,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_masked_text:
-    dependency: transitive
-    description:
-      name: flutter_masked_text
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.7.0"
   flutter_material_color_picker:
     dependency: "direct main"
     description:
@@ -396,13 +340,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.5"
-  flutter_native_timezone:
-    dependency: transitive
-    description:
-      name: flutter_native_timezone
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.4"
   flutter_redux:
     dependency: "direct main"
     description:
@@ -519,7 +456,7 @@ packages:
       name: image
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.9"
+    version: "2.1.4"
   image_cropper:
     dependency: "direct main"
     description:
@@ -549,12 +486,12 @@ packages:
     source: hosted
     version: "1.0.8"
   intl:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: intl
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.15.8"
+    version: "0.16.0"
   kiwi:
     dependency: "direct main"
     description:
@@ -603,7 +540,7 @@ packages:
       name: matcher
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.12.5"
+    version: "0.12.6"
   material_design_icons_flutter:
     dependency: "direct main"
     description:
@@ -617,7 +554,7 @@ packages:
       name: meta
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.7"
+    version: "1.1.8"
   mockito:
     dependency: "direct main"
     description:
@@ -805,13 +742,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.3.6"
-  sliver_calendar:
-    dependency: "direct main"
-    description:
-      name: sliver_calendar
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.2.0"
   source_span:
     dependency: transitive
     description:
@@ -881,7 +811,7 @@ packages:
       name: test_api
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.5"
+    version: "0.2.11"
   time_formatter:
     dependency: "direct main"
     description:
