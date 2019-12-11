@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_ui_designs/ones.dart';
+import 'package:flutter_ui_designs/profile_image.dart';
 import 'dart:ui';
 import 'package:multi_charts/multi_charts.dart';
 import 'package:like_button/like_button.dart';
@@ -19,21 +22,117 @@ class OneTab extends StatefulWidget {
   }
 }
 
-
 class _OneTabState extends State<OneTab> {
+  // Field
+  String uidLogin, urlPathImage;
 
-_onSelect(PageEnum value) {
+  List<String> keyData = [
+    'profileName',
+    'nameTeam',
+    'shirtNumber',
+    'position',
+    'foot',
+    'age',
+    'height',
+    'weight',
+    'speed',
+    'kick',
+    'pass',
+    'curve',
+    'stamina',
+    'jump'
+  ];
+
+  List<String> valueDataUsers = List();
+
+  // Method
+  @override
+  void initState() {
+    super.initState();
+    findUID();
+  }
+
+  Future<void> findUID() async {
+    FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+    await firebaseAuth.currentUser().then((object) {
+      uidLogin = object.uid;
+      findPathUrlImage();
+      readAllDataUser();
+    });
+  }
+
+  Future<void> readAllDataUser() async {
+    Firestore firestore = Firestore.instance;
+    CollectionReference collectionReference = firestore.collection('User');
+    await collectionReference
+        .document(uidLogin)
+        .snapshots()
+        .listen((DocumentSnapshot documentSnapshot) {
+      print('document = ${documentSnapshot.data}');
+
+      int index = 0;
+      for (var string in keyData) {
+        String value = documentSnapshot.data[string];
+        valueDataUsers.add(value);
+        print('valueDataUsers[$index] = ${valueDataUsers[index]}');
+        index++;
+      }
+    });
+  }
+
+  Future<void> findPathUrlImage() async {
+    try {
+      Firestore firestore = Firestore.instance;
+      CollectionReference collectionReference = firestore.collection('Avatar');
+      await collectionReference
+          .document(uidLogin)
+          .snapshots()
+          .listen((DocumentSnapshot documentSnapshot) {
+        print('document = ${documentSnapshot.data}');
+        setState(() {
+          urlPathImage = documentSnapshot.data['PathURL'];
+        });
+        print('url = $urlPathImage');
+      });
+    } catch (e) {}
+  }
+
+  _onSelect(PageEnum value) {
     switch (value) {
       case PageEnum.firstPage:
-        Navigator.of(context).push(
-            CupertinoPageRoute(builder: (BuildContext context) => EditProfile()));
+        Navigator.of(context).push(CupertinoPageRoute(
+            builder: (BuildContext context) => EditProfile()));
         break;
       case PageEnum.secondPage:
         Navigator.of(context).push(CupertinoPageRoute(
-            builder: (BuildContext context) => OnesTab()));
+            builder: (BuildContext context) => ProfileImage()));
         break;
-      
     }
+  }
+
+  Widget showImageDeflult() {
+    return Container(
+      height: 565,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(4),
+            topRight: Radius.circular(4),
+            bottomLeft: Radius.circular(4),
+            bottomRight: Radius.circular(4)),
+        image: DecorationImage(
+            image: AssetImage("assets/Moc.jpg"), fit: BoxFit.cover),
+      ),
+    );
+  }
+
+  Widget showImageNetwork() {
+    return Container(
+      height: 565,
+      child: Image.network(
+        urlPathImage,
+        fit: BoxFit.fill,
+      ),
+    );
   }
 
   @override
@@ -96,20 +195,9 @@ _onSelect(PageEnum value) {
                                     Padding(
                                       padding: EdgeInsets.only(
                                           left: 10, top: 30, right: 10),
-                                      child: Container(
-                                        height: 565,
-                                        decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(4),
-                                                topRight: Radius.circular(4),
-                                                bottomLeft: Radius.circular(4),
-                                                bottomRight:
-                                                    Radius.circular(4)),
-                                            image: DecorationImage(
-                                                image: AssetImage(
-                                                    "assets/Moc.jpg"),
-                                                fit: BoxFit.cover)),
-                                      ),
+                                      child: urlPathImage == null
+                                          ? showImageDeflult()
+                                          : showImageNetwork(),
                                     )
                                   ]),
                                   Padding(
@@ -214,55 +302,66 @@ _onSelect(PageEnum value) {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: <Widget>[
-                          SizedBox.fromSize(
-                          size: Size(50, 50),
-                          child: ClipOval(
-                          child: Material(
-                                color: Colors.transparent,
-                                child: InkWell(
-                                splashColor: Colors.white,
-                                onTap: () {
-                                Navigator.push(context,
-                                MaterialPageRoute(builder: (_) => FourTabss()));},
-                                         child: Column(
-                                         mainAxisAlignment: MainAxisAlignment.center,
-                                         children: <Widget>[
-                                            Icon(Icons.trending_up,size: 30,color: Colors.white,),
-                                            
-                                         ],
-                                        ))))),
-
-
-                  PopupMenuButton<PageEnum>(
-                  onSelected: _onSelect,
-                  child: Icon(
-                  Icons.menu,
-                  color: Colors.white,
-                  ),
-
-                  itemBuilder: (context) => <PopupMenuEntry<PageEnum>>[
-                  PopupMenuItem<PageEnum>(
-                    value: PageEnum.firstPage,
-                    child: Text("Create Profile Details"),
-                  ),
-                  PopupMenuItem<PageEnum>(
-                    value: PageEnum.secondPage,
-                    child: Text("Edit Picture"),
-                  ),
-                                                    
-                                              ]
-                                          ),
-                                          
+                                          SizedBox.fromSize(
+                                              size: Size(50, 50),
+                                              child: ClipOval(
+                                                  child: Material(
+                                                      color: Colors.transparent,
+                                                      child: InkWell(
+                                                          splashColor:
+                                                              Colors.white,
+                                                          onTap: () {
+                                                            Navigator.push(
+                                                                context,
+                                                                MaterialPageRoute(
+                                                                    builder: (_) =>
+                                                                        FourTabss()));
+                                                          },
+                                                          child: Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            children: <Widget>[
+                                                              Icon(
+                                                                Icons
+                                                                    .trending_up,
+                                                                size: 30,
+                                                                color: Colors
+                                                                    .white,
+                                                              ),
+                                                            ],
+                                                          ))))),
+                                          PopupMenuButton<PageEnum>(
+                                              onSelected: _onSelect,
+                                              child: Icon(
+                                                Icons.menu,
+                                                color: Colors.white,
+                                              ),
+                                              itemBuilder: (context) =>
+                                                  <PopupMenuEntry<PageEnum>>[
+                                                    PopupMenuItem<PageEnum>(
+                                                      value: PageEnum.firstPage,
+                                                      child: Text(
+                                                          "Create Profile Details"),
+                                                    ),
+                                                    PopupMenuItem<PageEnum>(
+                                                      value:
+                                                          PageEnum.secondPage,
+                                                      child:
+                                                          Text("Edit Picture"),
+                                                    ),
+                                                  ]),
                                         ],
                                       ),
                                     )
                                   ]),
-
-
                                   Stack(children: <Widget>[
                                     Padding(
                                         padding: EdgeInsets.only(
-                                             top: 420, right: 10, left: 220,),
+                                          top: 420,
+                                          right: 10,
+                                          left: 220,
+                                        ),
                                         child: RadarChart(
                                           maxHeight: 200,
                                           labelColor: Colors.white,
@@ -286,87 +385,117 @@ _onSelect(PageEnum value) {
                                         padding: EdgeInsets.only(
                                             left: 10, top: 605, right: 10),
                                         child: Container(
-                                          decoration: BoxDecoration(
-                                            gradient: LinearGradient(
-                                                begin: Alignment.topLeft,
-                                                end: Alignment.bottomRight,
-                                                stops: [
-                                                  0.6,
-                                                  0.7,
-                                                  0.8,
-                                                  0.9
-                                                ],
-                                                colors: [
-                                                  Colors.black.withOpacity(0.8),
-                                                  Colors.black
-                                                      .withOpacity(0.75),
-                                                  Colors.black.withOpacity(0.7),
-                                                  Colors.black
-                                                      .withOpacity(0.65),
-                                                ]),
-                                            shape: BoxShape.rectangle,
-                                            borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(4),
-                                                topRight: Radius.circular(4),
-                                                bottomLeft: Radius.circular(4),
-                                                bottomRight:Radius.circular(4)),
-                                          ),
-                                          
-                                          height: 152,
-                                          padding: EdgeInsets.only(
-                                          left: 10, right: 10.0, bottom: 0),
-                                          child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        Stack(
-                                          children: <Widget>[
-                                                  Padding(
-                                                      padding: EdgeInsets.only(
-                                                      left: 0,top: 0,right: 0),
-                                                      child: Stack(
-                                                        children: <Widget>[
-                                                        Container(
-                                                          decoration: BoxDecoration(
-                                                          shape: BoxShape.rectangle,
-                                                          borderRadius:BorderRadius.circular(5),
-                                                          color: Colors.black87.withOpacity(0.85),
-                                                        )),
-                                                        Padding(
+                                            decoration: BoxDecoration(
+                                              gradient: LinearGradient(
+                                                  begin: Alignment.topLeft,
+                                                  end: Alignment.bottomRight,
+                                                  stops: [
+                                                    0.6,
+                                                    0.7,
+                                                    0.8,
+                                                    0.9
+                                                  ],
+                                                  colors: [
+                                                    Colors.black
+                                                        .withOpacity(0.8),
+                                                    Colors.black
+                                                        .withOpacity(0.75),
+                                                    Colors.black
+                                                        .withOpacity(0.7),
+                                                    Colors.black
+                                                        .withOpacity(0.65),
+                                                  ]),
+                                              shape: BoxShape.rectangle,
+                                              borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(4),
+                                                  topRight: Radius.circular(4),
+                                                  bottomLeft:
+                                                      Radius.circular(4),
+                                                  bottomRight:
+                                                      Radius.circular(4)),
+                                            ),
+                                            height: 152,
+                                            padding: EdgeInsets.only(
+                                                left: 10,
+                                                right: 10.0,
+                                                bottom: 0),
+                                            child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: <Widget>[
+                                                  Stack(
+                                                    children: <Widget>[
+                                                      Padding(
                                                           padding:
                                                               EdgeInsets.only(
-                                                                  left: 15,top: 20,right: 15),
-                                                          child: Row(
-                                                            mainAxisSize:MainAxisSize.max,
-                                                            mainAxisAlignment:MainAxisAlignment.start,
-                                                            children: <Widget>[
-                                                 makeFeed( userName:'Ekachai Ton',
-                                                  userImage:'assets/Ton.jpg',
-                                                  feedTime:'1 hr ago',),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ]))
-                                                ],
-                                          ),
-                                          
-                                            Padding(padding:
-                                                          EdgeInsets.only(
-                                                          left: 15,bottom: 93,right: 10),
-                                                          child: Row(
-                                                            mainAxisSize:MainAxisSize.max,
-                                                            mainAxisAlignment:MainAxisAlignment.start,
-                                                            children: <Widget>[
-                                                              likeButton(),
-                                                            ]))
-                                          
-                                          
-                                          ]
-                                          )
-                                     ))
+                                                                  left: 0,
+                                                                  top: 0,
+                                                                  right: 0),
+                                                          child:
+                                                              Stack(children: <
+                                                                  Widget>[
+                                                            Container(
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                              shape: BoxShape
+                                                                  .rectangle,
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          5),
+                                                              color: Colors
+                                                                  .black87
+                                                                  .withOpacity(
+                                                                      0.85),
+                                                            )),
+                                                            Padding(
+                                                              padding: EdgeInsets
+                                                                  .only(
+                                                                      left: 15,
+                                                                      top: 20,
+                                                                      right:
+                                                                          15),
+                                                              child: Row(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .start,
+                                                                children: <
+                                                                    Widget>[
+                                                                  makeFeed(
+                                                                    userName:
+                                                                        'Ekachai Ton',
+                                                                    userImage:
+                                                                        'assets/Ton.jpg',
+                                                                    feedTime:
+                                                                        '1 hr ago',
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ]))
+                                                    ],
+                                                  ),
+                                                  Padding(
+                                                      padding: EdgeInsets.only(
+                                                          left: 15,
+                                                          bottom: 93,
+                                                          right: 10),
+                                                      child: Row(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .start,
+                                                          children: <Widget>[
+                                                            likeButton(),
+                                                          ]))
+                                                ])))
                                   ]),
-
-
                                   Padding(
                                       padding: EdgeInsets.all(20.0),
                                       child: Column(
@@ -394,7 +523,9 @@ _onSelect(PageEnum value) {
                                             ]),
                                             SizedBox(height: 20),
                                             Text(
-                                              "Ekachai Ton",
+                                              valueDataUsers.length == 0
+                                                  ? "Player Name"
+                                                  : valueDataUsers[0],
                                               overflow: TextOverflow.fade,
                                               maxLines: 1,
                                               style: TextStyle(
@@ -410,7 +541,6 @@ _onSelect(PageEnum value) {
                                                   fontSize: 20),
                                             ),
                                             SizedBox(height: 150),
-
                                             Row(children: <Widget>[
                                               Stack(
                                                   alignment:
@@ -470,7 +600,9 @@ _onSelect(PageEnum value) {
                                                                 fit: BoxFit
                                                                     .cover))),
                                                   ]),
-                                              SizedBox(width: 5,),    
+                                              SizedBox(
+                                                width: 5,
+                                              ),
                                               Text(
                                                 "Right Foot",
                                                 style: TextStyle(
@@ -479,9 +611,6 @@ _onSelect(PageEnum value) {
                                               ),
                                             ]),
                                           ])),
-
-                                  
-
                                   Padding(
                                       padding: EdgeInsets.only(
                                           top: 680, left: 20, right: 20),
@@ -618,16 +747,17 @@ _onSelect(PageEnum value) {
 
   Widget makeFeed({userName, userImage, feedTime}) {
     return Container(
-      margin: EdgeInsets.only(bottom: 85,),
+      margin: EdgeInsets.only(
+        bottom: 85,
+      ),
       child: Row(children: <Widget>[
         Container(
           width: 50,
           height: 50,
           decoration: BoxDecoration(
               shape: BoxShape.circle,
-              
               image: DecorationImage(
-              image: AssetImage(userImage), fit: BoxFit.cover)),
+                  image: AssetImage(userImage), fit: BoxFit.cover)),
         ),
         SizedBox(
           width: 10,
@@ -656,8 +786,6 @@ _onSelect(PageEnum value) {
     );
   }
 
-  
-
   Widget clubFlag() {
     return Container(
         width: 50,
@@ -669,19 +797,18 @@ _onSelect(PageEnum value) {
                 image: AssetImage("assets/Club.jpg"), fit: BoxFit.cover)));
   }
 
-Widget likeButton() {
+  Widget likeButton() {
     return Container(
-      width: 80,
-      height: 50,
-      decoration: BoxDecoration(
-          color: Colors.transparent,
-          shape: BoxShape.circle,
-          border: Border.all(color: Colors.transparent)),
-          child: Center(
-            child:LikeButton(
+        width: 80,
+        height: 50,
+        decoration: BoxDecoration(
+            color: Colors.transparent,
+            shape: BoxShape.circle,
+            border: Border.all(color: Colors.transparent)),
+        child: Center(
+            child: LikeButton(
           size: 25,
-          circleColor:
-              CircleColor(start: Colors.red, end: Colors.redAccent),
+          circleColor: CircleColor(start: Colors.red, end: Colors.redAccent),
           bubblesColor: BubblesColor(
             dotPrimaryColor: Colors.red,
             dotSecondaryColor: Colors.redAccent,
@@ -710,6 +837,5 @@ Widget likeButton() {
             return result;
           },
         )));
-
-}
+  }
 }
