@@ -135,6 +135,24 @@ class _OneTabState extends State<OneTab> {
     );
   }
 
+
+
+  List<double> powerList(){
+     
+   
+      double speed = double.parse(valueDataUsers[8]);
+      double kick = double.parse(valueDataUsers[9]);
+      double pass = double.parse(valueDataUsers[10]);
+      double curve = double.parse(valueDataUsers[11]);
+      double stam = double.parse(valueDataUsers[12]);
+      double jump = double.parse(valueDataUsers[13]);
+      
+       List<double> result = [speed, kick, pass, curve, stam, jump];
+       return result;
+      
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -367,7 +385,7 @@ class _OneTabState extends State<OneTab> {
                                           labelColor: Colors.white,
                                           strokeColor:
                                               Colors.grey.withOpacity(0.1),
-                                          values: [85, 90, 80, 60, 80, 72],
+                                          values: valueDataUsers.length == 0 ? [0,0,0,0,0,0] : powerList(),
                                           labels: [
                                             "Kick",
                                             "Pass",
@@ -820,13 +838,13 @@ class _OneTabState extends State<OneTab> {
               size: 25,
             );
           },
-          likeCount: 10864,
+          likeCount: 0,
           countBuilder: (int count, bool isLiked, String text) {
             var color = isLiked ? Colors.white : Colors.grey;
             Widget result;
             if (count == 0) {
               result = Text(
-                "love",
+                "0",
                 style: TextStyle(color: color),
               );
             } else
