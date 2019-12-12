@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_ui_designs/utility/my_alert.dart';
 
 import 'package:image_picker/image_picker.dart';
 
@@ -146,11 +147,25 @@ class EditProfileScreenState extends State<EditProfileScreen> {
         onPressed: () {
           formKey.currentState.save();
           int index = 0;
+          bool status = false;
           for (var data in myData) {
             print('myData[$index] = $data');
+
+            if (data.isEmpty) {
+              status = true;
+            } 
+
             index++;
           }
-          findUidLogin();
+         
+
+            if (status) {
+              normalDialog(context, 'Have Space', 'Please Fill all Blank');
+            } else {
+               findUidLogin();
+            }
+
+
         },
       ),
     );
@@ -184,6 +199,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
         .setData(map)
         .then((response) {
           print('Success Upload');
+          Navigator.of(context).pop();
         });
   }
 

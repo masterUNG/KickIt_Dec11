@@ -551,7 +551,9 @@ class _OneTabState extends State<OneTab> {
                                                   fontSize: 30),
                                             ),
                                             Text(
-                                              "ทีมไหน FC",
+                                               valueDataUsers.length == 0
+                                                  ? "Team Name"
+                                                  : valueDataUsers[1],
                                               overflow: TextOverflow.fade,
                                               maxLines: 1,
                                               style: TextStyle(
