@@ -101,7 +101,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
     userUpdateInfo.displayName = firstName;
     firebaseUser.updateProfile(userUpdateInfo);
     String uidLogin = firebaseUser.uid;
-    updateDatabaseThread(uidLogin);
+    // updateDatabaseThread(uidLogin);
+    routeToKickItApps();
   }
 
   Future<void> updateDatabaseThread(String uidLogin) async {
@@ -120,9 +121,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
         .setData(map)
         .then((response) {
           print('Register Success');
-          MaterialPageRoute materialPageRoute = MaterialPageRoute(builder: (BuildContext context)=>KickItApps());
-          Navigator.of(context).pushAndRemoveUntil(materialPageRoute, (Route<dynamic> route)=>false);
+          routeToKickItApps();
         });
+  }
+
+  void routeToKickItApps() {
+     MaterialPageRoute materialPageRoute = MaterialPageRoute(builder: (BuildContext context)=>KickItApps());
+    Navigator.of(context).pushAndRemoveUntil(materialPageRoute, (Route<dynamic> route)=>false);
   }
 
   Widget _buildFirstNameTF() {

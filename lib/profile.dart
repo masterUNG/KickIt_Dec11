@@ -37,21 +37,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
   // Field
   File avatarImageFile, backgroundImageFile;
   String sex;
-  String profileName,
-      nameTeam,
-      shirtNumber,
-      position,
-      foot,
-      age,
-      height,
-      weight,
-      speed,
-      kick,
-      pass,
-      curve,
-      stamina,
-      jump;
-
+  
   List<String> myData = [
     '',
     '',
@@ -91,6 +77,37 @@ class EditProfileScreenState extends State<EditProfileScreen> {
   final formKey = GlobalKey<FormState>();
 
   // Method
+  @override
+  void initState() { 
+    super.initState();
+    findUidLogin();
+    
+  }
+
+  Future<void> readAllUser()async{
+    Firestore firestore = Firestore.instance;
+    CollectionReference collectionReference = firestore.collection('User');
+    await collectionReference.document(uidLogin).snapshots().listen((DocumentSnapshot documentSnapshot){
+      print('documentSnapshopt = ${documentSnapshot.data}');
+      if (documentSnapshot.data != null) {
+        
+        
+        int index = 0;
+        for (var key in keyData) {
+          
+          String string = documentSnapshot.data[key];
+          setState(() {
+            myData[index] = string;
+          });
+          print('myData[$index] = ${myData[index]}');
+          index ++;
+        }
+
+      }
+    });
+  }
+
+
   Future getImage(bool isAvatar) async {
     var result = await ImagePicker.pickImage(source: ImageSource.gallery);
 
@@ -153,19 +170,16 @@ class EditProfileScreenState extends State<EditProfileScreen> {
 
             if (data.isEmpty) {
               status = true;
-            } 
+            }
 
             index++;
           }
-         
 
-            if (status) {
-              normalDialog(context, 'Have Space', 'Please Fill all Blank');
-            } else {
-               findUidLogin();
-            }
-
-
+          if (status) {
+            normalDialog(context, 'Have Space', 'Please Fill all Blank');
+          } else {
+            uploadToFirestore();
+          }
         },
       ),
     );
@@ -178,7 +192,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
     if (firebaseUser != null) {
       uidLogin = firebaseUser.uid;
       print('uidLogin = $uidLogin');
-      uploadToFirestore();
+      readAllUser();
     }
   }
 
@@ -187,7 +201,6 @@ class EditProfileScreenState extends State<EditProfileScreen> {
     int index = 0;
     for (var string in myData) {
       map[keyData[index]] = string;
-
       index++;
     }
 
@@ -201,11 +214,18 @@ class EditProfileScreenState extends State<EditProfileScreen> {
           print('Success Upload');
           Navigator.of(context).pop();
         });
+
+    // await collectionReference
+    //     .document(uidLogin)
+    //     .updateData({'prifileName': 'test Edit Master'}).then((response) {
+    //   print('Success Upload');
+    //   Navigator.of(context).pop();
+    // });
   }
 
   Container mainForm(String label, String hint, int index) {
     return Container(
-      child: TextFormField(
+      child: TextFormField(controller: TextEditingController(text: myData[index]),
         onSaved: (String string) {
           myData[index] = string.trim();
         },

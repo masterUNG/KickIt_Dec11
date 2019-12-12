@@ -70,10 +70,16 @@ class _OneTabState extends State<OneTab> {
         .listen((DocumentSnapshot documentSnapshot) {
       print('document = ${documentSnapshot.data}');
 
+      if (valueDataUsers.length != 0) {     
+        valueDataUsers.removeWhere((item) => item != null);
+      }
+
       int index = 0;
       for (var string in keyData) {
         String value = documentSnapshot.data[string];
-        valueDataUsers.add(value);
+        setState(() {
+          valueDataUsers.add(value);
+        });
         print('valueDataUsers[$index] = ${valueDataUsers[index]}');
         index++;
       }
@@ -100,8 +106,16 @@ class _OneTabState extends State<OneTab> {
   _onSelect(PageEnum value) {
     switch (value) {
       case PageEnum.firstPage:
-        Navigator.of(context).push(CupertinoPageRoute(
-            builder: (BuildContext context) => EditProfile()));
+        Navigator.of(context)
+            .push(
+          CupertinoPageRoute(
+            builder: (BuildContext context) => EditProfile(),
+          ),
+        )
+            .then((value) {
+          print('Back OK');
+          findUID();
+        });
         break;
       case PageEnum.secondPage:
         Navigator.of(context).push(CupertinoPageRoute(
@@ -135,23 +149,17 @@ class _OneTabState extends State<OneTab> {
     );
   }
 
+  List<double> powerList() {
+    double speed = double.parse(valueDataUsers[8]);
+    double kick = double.parse(valueDataUsers[9]);
+    double pass = double.parse(valueDataUsers[10]);
+    double curve = double.parse(valueDataUsers[11]);
+    double stam = double.parse(valueDataUsers[12]);
+    double jump = double.parse(valueDataUsers[13]);
 
-
-  List<double> powerList(){
-     
-   
-      double speed = double.parse(valueDataUsers[8]);
-      double kick = double.parse(valueDataUsers[9]);
-      double pass = double.parse(valueDataUsers[10]);
-      double curve = double.parse(valueDataUsers[11]);
-      double stam = double.parse(valueDataUsers[12]);
-      double jump = double.parse(valueDataUsers[13]);
-      
-       List<double> result = [speed, kick, pass, curve, stam, jump];
-       return result;
-      
+    List<double> result = [speed, kick, pass, curve, stam, jump];
+    return result;
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -385,7 +393,9 @@ class _OneTabState extends State<OneTab> {
                                           labelColor: Colors.white,
                                           strokeColor:
                                               Colors.grey.withOpacity(0.1),
-                                          values: valueDataUsers.length == 0 ? [0,0,0,0,0,0] : powerList(),
+                                          values: valueDataUsers.length == 0
+                                              ? [0, 0, 0, 0, 0, 0]
+                                              : powerList(),
                                           labels: [
                                             "Kick",
                                             "Pass",
@@ -551,7 +561,7 @@ class _OneTabState extends State<OneTab> {
                                                   fontSize: 30),
                                             ),
                                             Text(
-                                               valueDataUsers.length == 0
+                                              valueDataUsers.length == 0
                                                   ? "Team Name"
                                                   : valueDataUsers[1],
                                               overflow: TextOverflow.fade,
