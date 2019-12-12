@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_ui_designs/appss.dart';
 import 'package:flutter_ui_designs/login/constants.dart';
 import 'package:flutter_ui_designs/login/sign_up.dart';
-import 'package:flutter_ui_designs/login/forgot_password.dart';
 import 'package:flutter_ui_designs/utility/my_alert.dart';
 import 'package:flutter_ui_designs/login/MyResetPasswordPage.dart';
 
@@ -131,24 +130,22 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Text(
           'Forgot Password?',
           style: TextStyle(
-                            color: Colors.white.withOpacity(0.9),
-                            shadows: [
-                            Shadow(
-                            blurRadius: 10.0,
-                            color: Colors.black,
-                            offset: Offset(5.0, 5.0),
-                             ),
-                            ],
-                            fontFamily: 'OpenSans',
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-          
+            color: Colors.white.withOpacity(0.9),
+            shadows: [
+              Shadow(
+                blurRadius: 10.0,
+                color: Colors.black,
+                offset: Offset(5.0, 5.0),
+              ),
+            ],
+            fontFamily: 'OpenSans',
+            fontSize: 15.0,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
     );
   }
-
 
   Future<void> checkAuthen() async {
     if (email.isEmpty || password.isEmpty) {
@@ -158,12 +155,12 @@ class _LoginScreenState extends State<LoginScreen> {
       await firebaseAuth
           .signInWithEmailAndPassword(email: email, password: password)
           .then((response) {
-            moveToApps();
-          }).catchError((response){
-            String title = response.code;
-            String message = response.message;
-            normalDialog(context, title, message);
-          });
+        moveToApps();
+      }).catchError((response) {
+        String title = response.code;
+        String message = response.message;
+        normalDialog(context, title, message);
+      });
     }
   }
 
@@ -189,11 +186,11 @@ class _LoginScreenState extends State<LoginScreen> {
           style: TextStyle(
             color: Colors.white,
             shadows: [
-            Shadow(
-            blurRadius: 5.0,
-            color: Colors.black,
-            offset: Offset(2.0, 2.0),
-             ),
+              Shadow(
+                blurRadius: 5.0,
+                color: Colors.black,
+                offset: Offset(2.0, 2.0),
+              ),
             ],
             letterSpacing: 1.5,
             fontSize: 18.0,
@@ -213,11 +210,11 @@ class _LoginScreenState extends State<LoginScreen> {
           style: TextStyle(
             color: Colors.white,
             shadows: [
-            Shadow(
-            blurRadius: 3.0,
-            color: Colors.black,
-            offset: Offset(1.0, 1.0),
-             ),
+              Shadow(
+                blurRadius: 3.0,
+                color: Colors.black,
+                offset: Offset(1.0, 1.0),
+              ),
             ],
             fontWeight: FontWeight.w400,
           ),
@@ -228,11 +225,11 @@ class _LoginScreenState extends State<LoginScreen> {
           style: TextStyle(
             color: Colors.white,
             shadows: [
-            Shadow(
-            blurRadius: 3.0,
-            color: Colors.black,
-            offset: Offset(1.0, 1.0),
-             ),
+              Shadow(
+                blurRadius: 3.0,
+                color: Colors.black,
+                offset: Offset(1.0, 1.0),
+              ),
             ],
             fontWeight: FontWeight.w400,
           ),
@@ -310,13 +307,13 @@ class _LoginScreenState extends State<LoginScreen> {
             TextSpan(
               text: 'Sign Up',
               style: TextStyle(
-            shadows: [
-            Shadow(
-            blurRadius: 10.0,
-            color: Colors.black,
-            offset: Offset(5.0, 5.0),
-             ),
-            ],
+                shadows: [
+                  Shadow(
+                    blurRadius: 10.0,
+                    color: Colors.black,
+                    offset: Offset(5.0, 5.0),
+                  ),
+                ],
                 color: Colors.white,
                 fontSize: 18.0,
                 fontWeight: FontWeight.bold,
@@ -339,8 +336,8 @@ class _LoginScreenState extends State<LoginScreen> {
             children: <Widget>[
               Container(
                   decoration: BoxDecoration(
-                      image:  DecorationImage(
-                          image:  AssetImage("assets/atro/B4.jpg"),
+                      image: DecorationImage(
+                          image: AssetImage("assets/atro/B4.jpg"),
                           fit: BoxFit.cover))),
               Container(
                 height: double.infinity,
@@ -355,24 +352,25 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        SizedBox(height: 40,),
+                        SizedBox(
+                          height: 40,
+                        ),
                         Container(
                             height: 120,
                             width: 340,
                             decoration: BoxDecoration(
-                                image:  DecorationImage(
-                                    image:
-                                         AssetImage("assets/atro/logo.png"),
+                                image: DecorationImage(
+                                    image: AssetImage("assets/atro/logo.png"),
                                     fit: BoxFit.fitWidth))),
                         Text(
                           'Sign In',
                           style: TextStyle(
                             shadows: [
-                            Shadow(
-                            blurRadius: 10.0,
-                            color: Colors.black,
-                            offset: Offset(5.0, 5.0),
-                             ),
+                              Shadow(
+                                blurRadius: 10.0,
+                                color: Colors.black,
+                                offset: Offset(5.0, 5.0),
+                              ),
                             ],
                             color: Colors.white,
                             fontFamily: 'OpenSans',
@@ -387,11 +385,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         _buildPasswordTF(),
                         _buildForgotPasswordBtn(),
-                        
                         _buildLoginBtn(),
                         _buildSignInWithText(),
                         _buildSocialBtnRow(),
-                        SizedBox(height: 15,),
+                        SizedBox(
+                          height: 15,
+                        ),
                         _buildSignupBtn(),
                       ],
                     ),

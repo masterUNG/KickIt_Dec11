@@ -6,13 +6,6 @@ import 'package:morpheus/morpheus.dart';
 import 'package:flutter/material.dart';
 import 'one.dart';
 import 'two.dart';
-import 'fourrr.dart';
-import 'package:flutter_ui_designs/blog/home.dart';
-
-
-
-
-
 
 class CustomAppBarDemo extends StatefulWidget {
   @override
@@ -32,7 +25,6 @@ class _CustomAppBarDemoState extends State<CustomAppBarDemo> {
     TwoTab(),
     FiveTab(),
     HomeScreen(),
-    
   ];
   int _currentIndex = 0;
 
@@ -78,28 +70,26 @@ class _CustomAppBarDemoState extends State<CustomAppBarDemo> {
             actionBuilder: (BuildContext context, int index, bool active) {
               var _color = active ? Colors.green : Colors.black12;
 
-              return Stack(alignment: Alignment.center, 
-              children: <Widget>[
-                
+              return Stack(alignment: Alignment.center, children: <Widget>[
                 FittedBox(
                     fit: BoxFit.scaleDown,
                     child: SizedBox(
-                    height: 52,
-                    width: 52,
-                    child: RaisedButton(
-                        child: Image.asset('assets/atro/Football.png'),
-                        elevation: 5.0,
-                        shape: StadiumBorder(),
-                        padding: EdgeInsets.all(4),
-                        color: Colors.white38,
-                        splashColor: Colors.blue.withOpacity(0.2),
-                        onPressed: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (_) => ThreeTab()));
-                        }
-                        ))
-              )
-              ]);}));}}
-            
-  
-
+                        height: 52,
+                        width: 52,
+                        child: RaisedButton(
+                            child: Image.asset('assets/atro/Football.png'),
+                            elevation: 5.0,
+                            shape: StadiumBorder(),
+                            padding: EdgeInsets.all(4),
+                            color: Colors.white38,
+                            splashColor: Colors.blue.withOpacity(0.2),
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => ThreeTab()));
+                            })))
+              ]);
+            }));
+  }
+}
