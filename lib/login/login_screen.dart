@@ -34,7 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void moveToApps() {
     MaterialPageRoute materialPageRoute =
         MaterialPageRoute(builder: (BuildContext context) {
-      return CustomAppBarDemo();
+      return CustomAppBarDemo(currentIndex: 0,);
     });
     Navigator.of(context).pushAndRemoveUntil(materialPageRoute,
         (Route<dynamic> route) {

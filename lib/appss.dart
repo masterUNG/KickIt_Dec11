@@ -8,6 +8,9 @@ import 'one.dart';
 import 'two.dart';
 
 class CustomAppBarDemo extends StatefulWidget {
+  final int currentIndex;
+  CustomAppBarDemo({Key key, this.currentIndex}) : super(key: key);
+
   @override
   _CustomAppBarDemoState createState() => _CustomAppBarDemoState();
 }
@@ -26,7 +29,15 @@ class _CustomAppBarDemoState extends State<CustomAppBarDemo> {
     FiveTab(),
     HomeScreen(),
   ];
-  int _currentIndex = 0;
+  int _currentIndex;
+
+  @override
+  void initState() { 
+    super.initState();
+    _currentIndex = widget.currentIndex;
+  }
+
+  
 
   @override
   Widget build(BuildContext context) {

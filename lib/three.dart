@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_ui_designs/appss.dart';
 import 'package:flutter_ui_designs/lesson.dart';
 import 'package:flutter_ui_designs/two.dart';
 
@@ -38,7 +39,6 @@ class _ThreeTab extends State<ThreeTab> {
                     fontSize: 16,
                     fontWeight: FontWeight.w600),
               ),
-              
             ],
           ),
           subtitle: Row(
@@ -69,18 +69,15 @@ class _ThreeTab extends State<ThreeTab> {
               ),
             ],
           ),
-          trailing: 
-              Text(lesson.member,
+          trailing: Text(lesson.member,
               overflow: TextOverflow.fade,
               maxLines: 1,
               style: TextStyle(color: Colors.black87, fontSize: 12)),
-              onTap: () {
+          onTap: () {
             Navigator.push(
                 context, MaterialPageRoute(builder: (context) => TwoTab()));
           },
-          );
-          
-        
+        );
 
     Card makeCard(Lesson lesson) => Card(
           elevation: 3.0,
@@ -108,6 +105,18 @@ class _ThreeTab extends State<ThreeTab> {
     );
 
     final topAppBar = AppBar(
+      leading: IconButton(
+        icon: Icon(Icons.navigate_before),
+        onPressed: () {
+          // Navigator.of(context).pop();
+          MaterialPageRoute materialPageRoute =
+              MaterialPageRoute(builder: (BuildContext buildContext) {
+            return CustomAppBarDemo(currentIndex: 1,);
+          });
+          Navigator.of(context).pushAndRemoveUntil(
+              materialPageRoute, (Route<dynamic> route) => false);
+        },
+      ),
       elevation: 0.1,
       backgroundColor: Colors.black54,
       title: Text('Soccer Community'),
@@ -134,94 +143,94 @@ class _ThreeTab extends State<ThreeTab> {
 List getLessons() {
   return [
     Lesson(
-        title: "ทีมไหน FC",
-        member: "25 Member",
-        indicatorValue: 0.89,
-        address: "Muang, Rayong, Thailand",
-        ),
+      title: "ทีมไหน FC",
+      member: "25 Member",
+      indicatorValue: 0.89,
+      address: "Muang, Rayong, Thailand",
+    ),
     Lesson(
-        title: "ทีมไหน FC",
-        member: "25 Member",
-        indicatorValue: 0.89,
-        address: "Muang, Rayong, Thailand",
-        ),
+      title: "ทีมไหน FC",
+      member: "25 Member",
+      indicatorValue: 0.89,
+      address: "Muang, Rayong, Thailand",
+    ),
     Lesson(
-        title: "ทีมไหน FC",
-        member: "25 Member",
-        indicatorValue: 0.89,
-        address: "Muang, Rayong, Thailand",
-        ),
+      title: "ทีมไหน FC",
+      member: "25 Member",
+      indicatorValue: 0.89,
+      address: "Muang, Rayong, Thailand",
+    ),
     Lesson(
-        title: "ทีมไหน FC",
-        member: "25 Member",
-        indicatorValue: 0.89,
-        address: "Muang, Rayong, Thailand",
-        ),
+      title: "ทีมไหน FC",
+      member: "25 Member",
+      indicatorValue: 0.89,
+      address: "Muang, Rayong, Thailand",
+    ),
     Lesson(
-        title: "ทีมไหน FC",
-        member: "25 Member",
-        indicatorValue: 0.89,
-        address: "Muang, Rayong, Thailand",
-        ),
+      title: "ทีมไหน FC",
+      member: "25 Member",
+      indicatorValue: 0.89,
+      address: "Muang, Rayong, Thailand",
+    ),
     Lesson(
-        title: "ทีมไหน FC",
-        member: "25 Member",
-        indicatorValue: 0.89,
-        address: "Muang, Rayong, Thailand",
-        ),
+      title: "ทีมไหน FC",
+      member: "25 Member",
+      indicatorValue: 0.89,
+      address: "Muang, Rayong, Thailand",
+    ),
     Lesson(
-        title: "ทีมไหน FC",
-        member: "25 Member",
-        indicatorValue: 0.89,
-        address: "Muang, Rayong, Thailand",
-        ),
+      title: "ทีมไหน FC",
+      member: "25 Member",
+      indicatorValue: 0.89,
+      address: "Muang, Rayong, Thailand",
+    ),
     Lesson(
-        title: "ทีมไหน FC",
-        member: "25 Member",
-        indicatorValue: 0.89,
-        address: "Muang, Rayong, Thailand",
-        ),
+      title: "ทีมไหน FC",
+      member: "25 Member",
+      indicatorValue: 0.89,
+      address: "Muang, Rayong, Thailand",
+    ),
     Lesson(
-        title: "ทีมไหน FC",
-        member: "25 Member",
-        indicatorValue: 0.89,
-        address: "Muang, Rayong, Thailand",
-        ),
+      title: "ทีมไหน FC",
+      member: "25 Member",
+      indicatorValue: 0.89,
+      address: "Muang, Rayong, Thailand",
+    ),
     Lesson(
-        title: "ทีมไหน FC",
-        member: "25 Member",
-        indicatorValue: 0.89,
-        address: "Muang, Rayong, Thailand",
-        ),
+      title: "ทีมไหน FC",
+      member: "25 Member",
+      indicatorValue: 0.89,
+      address: "Muang, Rayong, Thailand",
+    ),
     Lesson(
-        title: "ทีมไหน FC",
-        member: "25 Member",
-        indicatorValue: 0.89,
-        address: "Muang, Rayong, Thailand",
-        ),
+      title: "ทีมไหน FC",
+      member: "25 Member",
+      indicatorValue: 0.89,
+      address: "Muang, Rayong, Thailand",
+    ),
     Lesson(
-        title: "ทีมไหน FC",
-        member: "25 Member",
-        indicatorValue: 0.89,
-        address: "Muang, Rayong, Thailand",
-        ),
+      title: "ทีมไหน FC",
+      member: "25 Member",
+      indicatorValue: 0.89,
+      address: "Muang, Rayong, Thailand",
+    ),
     Lesson(
-        title: "ทีมไหน FC",
-        member: "25 Member",
-        indicatorValue: 0.89,
-        address: "Muang, Rayong, Thailand",
-        ),
+      title: "ทีมไหน FC",
+      member: "25 Member",
+      indicatorValue: 0.89,
+      address: "Muang, Rayong, Thailand",
+    ),
     Lesson(
-        title: "ทีมไหน FC",
-        member: "25 Member",
-        indicatorValue: 0.89,
-        address: "Muang, Rayong, Thailand",
-        ),
+      title: "ทีมไหน FC",
+      member: "25 Member",
+      indicatorValue: 0.89,
+      address: "Muang, Rayong, Thailand",
+    ),
     Lesson(
-        title: "ทีมไหน FC",
-        member: "25 Member",
-        indicatorValue: 0.89,
-        address: "Muang, Rayong, Thailand",
-        ),            
+      title: "ทีมไหน FC",
+      member: "25 Member",
+      indicatorValue: 0.89,
+      address: "Muang, Rayong, Thailand",
+    ),
   ];
 }

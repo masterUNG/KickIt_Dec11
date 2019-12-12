@@ -19,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> startTime() async {
-    var _duration = Duration(seconds: 10);
+    var _duration = Duration(seconds: 2);
     return Timer(_duration, authenProcess);
   }
 
