@@ -217,25 +217,22 @@ class EditProfileScreenState extends State<EditProfileScreen> {
     // });
   }
 
-  TextEditingController findController(bool status, int index){
-
+  TextEditingController findController(bool status, int index) {
     TextEditingController emtyController = TextEditingController();
-  TextEditingController myController = TextEditingController(text: myData[index]);
+    TextEditingController myController =
+        TextEditingController(text: myData[index]);
 
     if (status) {
       return emtyController;
     } else {
       return myController;
     }
-    
   }
-
-  
 
   Container mainForm(String label, String hint, int index) {
     return Container(
       child: TextFormField(
-        controller: findController(true, index),
+        // controller: findController(true, index),
         onSaved: (String string) {
           myData[index] = string.trim();
         },
