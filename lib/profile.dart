@@ -37,7 +37,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
   // Field
   File avatarImageFile, backgroundImageFile;
   String sex;
-  
+
   List<String> myData = [
     '',
     '',
@@ -78,35 +78,32 @@ class EditProfileScreenState extends State<EditProfileScreen> {
 
   // Method
   @override
-  void initState() { 
+  void initState() {
     super.initState();
     findUidLogin();
-    
   }
 
-  Future<void> readAllUser()async{
+  Future<void> readAllUser() async {
     Firestore firestore = Firestore.instance;
     CollectionReference collectionReference = firestore.collection('User');
-    await collectionReference.document(uidLogin).snapshots().listen((DocumentSnapshot documentSnapshot){
+    await collectionReference
+        .document(uidLogin)
+        .snapshots()
+        .listen((DocumentSnapshot documentSnapshot) {
       print('documentSnapshopt = ${documentSnapshot.data}');
       if (documentSnapshot.data != null) {
-        
-        
         int index = 0;
         for (var key in keyData) {
-          
           String string = documentSnapshot.data[key];
           setState(() {
             myData[index] = string;
           });
           print('myData[$index] = ${myData[index]}');
-          index ++;
+          index++;
         }
-
       }
     });
   }
-
 
   Future getImage(bool isAvatar) async {
     var result = await ImagePicker.pickImage(source: ImageSource.gallery);
@@ -207,13 +204,10 @@ class EditProfileScreenState extends State<EditProfileScreen> {
     Firestore firestore = Firestore.instance;
     CollectionReference collectionReference = firestore.collection('User');
 
-    await collectionReference
-        .document(uidLogin)
-        .setData(map)
-        .then((response) {
-          print('Success Upload');
-          Navigator.of(context).pop();
-        });
+    await collectionReference.document(uidLogin).setData(map).then((response) {
+      print('Success Upload');
+      Navigator.of(context).pop();
+    });
 
     // await collectionReference
     //     .document(uidLogin)
@@ -223,9 +217,25 @@ class EditProfileScreenState extends State<EditProfileScreen> {
     // });
   }
 
+  TextEditingController findController(bool status, int index){
+
+    TextEditingController emtyController = TextEditingController();
+  TextEditingController myController = TextEditingController(text: myData[index]);
+
+    if (status) {
+      return emtyController;
+    } else {
+      return myController;
+    }
+    
+  }
+
+  
+
   Container mainForm(String label, String hint, int index) {
     return Container(
-      child: TextFormField(controller: TextEditingController(text: myData[index]),
+      child: TextFormField(
+        controller: findController(true, index),
         onSaved: (String string) {
           myData[index] = string.trim();
         },
